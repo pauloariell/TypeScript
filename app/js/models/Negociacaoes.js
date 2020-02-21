@@ -6,6 +6,7 @@ class Negociacoes {
         this._negociacoes.push(negociacao);
     }
     paraArray() {
-        return this._negociacoes;
+        //para evitar alteração direta no array
+        return [].concat(this._negociacoes);
     }
 }
