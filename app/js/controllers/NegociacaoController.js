@@ -1,6 +1,6 @@
 System.register(["../views/index", "../models/index"], function (exports_1, context_1) {
     "use strict";
-    var index_1, index_2, NegociacaoController;
+    var index_1, index_2, NegociacaoController, diaSemana;
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
@@ -24,13 +24,27 @@ System.register(["../views/index", "../models/index"], function (exports_1, cont
                 }
                 adicionar(event) {
                     event.preventDefault();
-                    const negociacao = new index_2.Negociacao(new Date(this._inputData.val().replace(/-/g, ',')), parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
+                    let data = new Date(this._inputData.val().replace(/-/g, ','));
+                    if (data.getDay() == diaSemana.Sabado || data.getDay() == diaSemana.Sabado) {
+                        this._mensagemView.update('Somente negociações em dias úteis, por favor!');
+                        return;
+                    }
+                    const negociacao = new index_2.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
                     this._negociacoes.adicionar(negociacao);
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adiciona com sucesso!');
                 }
             };
             exports_1("NegociacaoController", NegociacaoController);
+            (function (diaSemana) {
+                diaSemana[diaSemana["Domingo"] = 0] = "Domingo";
+                diaSemana[diaSemana["Segunda"] = 1] = "Segunda";
+                diaSemana[diaSemana["Terca"] = 2] = "Terca";
+                diaSemana[diaSemana["Quarta"] = 3] = "Quarta";
+                diaSemana[diaSemana["Quinta"] = 4] = "Quinta";
+                diaSemana[diaSemana["Sexta"] = 5] = "Sexta";
+                diaSemana[diaSemana["Sabado"] = 6] = "Sabado";
+            })(diaSemana || (diaSemana = {}));
         }
     };
 });
