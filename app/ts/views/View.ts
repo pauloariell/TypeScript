@@ -1,3 +1,4 @@
+import { LogExecTime } from '../helpers/Decorators/index';
 export abstract class View<T> {
     protected _elemento: JQuery;
     private _escapar: boolean;
@@ -6,6 +7,7 @@ export abstract class View<T> {
         this._elemento = $(selector);
         this._escapar = escapar;
     }
+    @LogExecTime()
     update(model: T): void {
         let template = this.template(model);
         if(this._escapar) 

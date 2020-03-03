@@ -1,22 +1,32 @@
 import { NegociacoesView, MensagemView } from '../views/index';
 import { Negociacao, Negociacoes } from '../models/index';
+import { LogExecTime, domInject } from '../helpers/Decorators/index';
 
 export class NegociacaoController {
+    @domInject('#data')
     private _inputData: JQuery;
+
+    @domInject('#quantidade')
     private _inputQuantidade: JQuery;
+
+    @domInject('#valor')
     private _inputValor: JQuery;
+
     private _negociacoes = new Negociacoes();
     private _negociacoesView = new NegociacoesView("#negociacoesView");
     private _mensagemView = new MensagemView('#mensagemView');
 
     constructor(){
-        this._inputData = $('#data');
+        /*this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
-        this._inputValor = $('#valor');
+        this._inputValor = $('#valor');*/
         this._negociacoesView.update(this._negociacoes);
     }
 
+    @LogExecTime(true)
     adicionar(event: Event){
+        const t1 = performance.now();
+
         event.preventDefault();
 
         let data = new Date(this._inputData.val().replace(/-/g, ','));
@@ -41,6 +51,8 @@ export class NegociacaoController {
             console.log(negociacao.valor);
         });
         console.log(negociacao);*/
+        const t2 = performance.now();
+        console.log(`Tempo de add é de ${t2-t1} ms`);
     }
 }
 enum diaSemana {
